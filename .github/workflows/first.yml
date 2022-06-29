@@ -1,4 +1,4 @@
-name: test
+name: update
 
 on:
   push:
@@ -15,4 +15,5 @@ jobs:
       - run: echo "${{ secrets.deploykey }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
       - run: rsync -e "ssh -p 22 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@62.113.111.145:~/PythonBot
+      - run: pip3 install aiogram
       - run: nohup python3 TelegramBot.py
