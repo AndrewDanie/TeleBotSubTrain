@@ -6,8 +6,11 @@ on:
       - master
 
 jobs:
-  hello-world:
+  bot_update:
     runs-on: ubuntu-latest
     steps:
-      - name: print hello
-        run: echo 'Hello world!'
+      - uses: actions/checkout@v2
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo "${{ secrets.deploykey }}" > "$HOME/.ssh/key"
+      - run: rsync -e "ssh -p 22 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@62.113.111.145:~/PythonBot
