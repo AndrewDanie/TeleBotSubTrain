@@ -1,24 +1,24 @@
-name: bot_update
-
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - run: set -eu
-      - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.deploykey }}" > "$HOME/.ssh/key"
-      - run: chmod 600 "$HOME/.ssh/key"
-      - run: which ssh
-      - run: pwd
-      - run: ssh -t -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@62.113.111.145 "$( cat <<'EOT'
-      - run: pwd
-      - run: cd PythonBot/TeleBotSubTrain
-      - run: source /env/bin/activate
-      - run: pkill python
-      - run: git pull origin
-      - run: nohup python TelegramBot.py &
+#name: bot_update
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#
+#jobs:
+#  update:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: set -eu
+#      - run: mkdir "$HOME/.ssh"
+#      - run: echo "${{ secrets.deploykey }}" > "$HOME/.ssh/key"
+#      - run: chmod 600 "$HOME/.ssh/key"
+#      - run: which ssh
+#      - run: pwd
+#      - run: ssh -t -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@62.113.111.145 "$( cat <<'EOT'
+#      - run: pwd
+#      - run: cd PythonBot/TeleBotSubTrain
+#      - run: source /env/bin/activate
+#      - run: pkill python
+#      - run: git pull origin
+#      - run: nohup python TelegramBot.py &
