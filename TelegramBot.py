@@ -1,3 +1,5 @@
+import datetime
+
 from aiogram import Bot
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.dispatcher import Dispatcher
@@ -5,6 +7,7 @@ from aiogram.utils import executor
 
 import requests
 from datetime import timedelta
+import pytz
 
 from config import TELEGRAM_TOKEN, yandex_token
 
@@ -77,8 +80,7 @@ def form_answer(segments, msg_date, key):
     curr_min = get_current_minute(msg_date, key)
 
     answer = f'{msg[key]}:\n\n'
-    for i in range(len(segments)):
-        train = segments[i]
+    for train in segments:
         departure_time = train['departure'][11:16]
         departure_minutes = int(departure_time[:2])*60 + int(departure_time[3:])
         arrival_time = train['arrival'][11:16]
@@ -97,6 +99,7 @@ def form_answer(segments, msg_date, key):
         return 'answer is empty'
 
 
+timezone = pytz.timezone('Europe/Moscow')
 bot = Bot(token=TELEGRAM_TOKEN)
 dispatcher = Dispatcher(bot)
 
@@ -133,7 +136,8 @@ async def bot_message(message: Message):
     answr = None
     for key in msg:
         if message.text == msg[key]:
-            answr = get_subtrain_data(message.date, key=key)
+            date_time = datetime.datetime.now(pytz.timezone('Europe/Moscow'))
+            answr = get_subtrain_data(date_time, key=key)
 
     if answr is None:
         answr ='Неизвестная команда'
