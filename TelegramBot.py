@@ -41,10 +41,10 @@ def get_data_from_yandex_API(key, msg_date):
 def get_stations_id(key):
     from config import petr_code, balt_code
     if key == '2h_pet' or key == 'tday_pet' or key == 'tmr_pet':
-        print('from Petergof')
+        # print('from Petergof')
         return petr_code, balt_code
     else:
-        print('from SPb')
+        # print('from SPb')
         return balt_code, petr_code
 
 
