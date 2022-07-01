@@ -15,7 +15,7 @@ jobs:
       - run: chmod 600 "$HOME/.ssh/key"
       - run: which ssh
       - run: pwd
-      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@62.113.111.145
+      - run: ssh -tt -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@62.113.111.145
       - run: pwd
       - run: cd PythonBot/TeleBotSubTrain
       - run: source /env/bin/activate
