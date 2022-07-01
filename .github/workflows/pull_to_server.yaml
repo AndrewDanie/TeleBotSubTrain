@@ -1,0 +1,21 @@
+name: bot_update
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo "${{ secrets.deploykey }}" > "$HOME/.ssh/key"
+      - run: chmod 600 "$HOME/.ssh/key"
+      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no root@62.113.111.145
+      - run: cd /PythonBot/TeleBotSubTrain
+      - run: source /env/bin/activate
+      - run: pkill python
+      - run: git pull origin
+      - run: nohup python TelegramBot.py &
